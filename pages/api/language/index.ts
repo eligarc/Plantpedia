@@ -8,7 +8,7 @@ const DEFAULT_LOCALE = 'es'
 // Learn more: https://nextjs.org/docs/advanced-features/i18n-routing#leveraging-the-next_locale-cookie
 const PREFERRED_LOCALE_COOKIE = 'NEXT_LOCALE'
 
-const language: NextApiHandler = (request, response) => {
+const language: NextApiHandler = (request, response): any => {
   if (request.method === 'GET') {
     const preferredLocale = request.cookies[PREFERRED_LOCALE_COOKIE] || ''
 
