@@ -1,6 +1,7 @@
 /**
  * @type {import('next').NextConfig}
  */
+ const { i18n } = require('./next-i18next.config')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
@@ -12,10 +13,7 @@ const nextConfig = {
   images: {
     domains: ['images.ctfassets.net'],
   },
-  i18n: {
-    locales: ['en-US', 'es'], // Lista de todos los locales a soportar
-    defaultLocale: 'en-US', // Locale por defecto
-  },
+  i18n,
 }
 
 module.exports = withBundleAnalyzer(nextConfig)
