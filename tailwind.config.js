@@ -5,7 +5,7 @@ module.exports = {
     extend: {},
     fontFamily: {
       serif:
-        '"Cormorant Garamond", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif',
+        '"Nunito", sans-serif',
     },
   },
   variants: {

@@ -19,7 +19,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, title }) => {
         <noscript id="mui-insertion-point" />
         {/* Google fonts get automatically automized by Next.js: https://nextjs.org/blog/next-10-2#automatic-webfont-optimization */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
           rel="stylesheet"
         />
       </Head>

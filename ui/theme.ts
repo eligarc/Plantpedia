@@ -4,7 +4,7 @@ import { grey, common, lightGreen } from '@material-ui/core/colors'
 const muiTheme = createMuiTheme()
 
 // It matches tailwind.config.js
-const fontSerif = `'Cormorant Garamond', ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;`
+const fontSerif = `'Nunito', sans-serif;`
 
 // Build your own theme with the Color Theme tool
 // @see https://material.io/resources/color/
