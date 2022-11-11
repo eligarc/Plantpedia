@@ -1,8 +1,8 @@
-import { useState, ChangeEventHandler, useEffect, useCallback } from 'react'
+import { useState, ChangeEventHandler, useEffect, /*useCallback*/ } from 'react'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import { GetStaticProps } from 'next'
-import debounce from 'lodash/debounce'
+// import debounce from 'lodash/debounce'
 import {
   OutlinedInput,
   InputLabel,
@@ -27,18 +27,18 @@ export default function Search() {
   const [status, setStatus] = useState<QueryStatus>('idle')
   const [results, setResults] = useState<Plant[]>([])
 
-  // const searchTerm = useDebounce(term, 500)
-  const debouncedSearchPlants = useCallback(debounce((term: string) => {
-    searchPlants({
-      term,
-      limit: 10,
-    }).then((data) => {
-      setResults(data)
-      setStatus('success')
-    })
-  }, 500),
-  []
-  )
+  const searchTerm = useDebounce(term, 500)
+  // const debouncedSearchPlants = useCallback(debounce((term: string) => {
+  //   searchPlants({
+  //     term,
+  //     limit: 10,
+  //   }).then((data) => {
+  //     setResults(data)
+  //     setStatus('success')
+  //   })
+  // }, 500),
+  // []
+  // )
 
   const updateTerm: ChangeEventHandler<HTMLInputElement> = (event) =>
     setTerm(event.currentTarget.value)
@@ -46,24 +46,22 @@ export default function Search() {
   const emptyResults = status === 'success' && results.length === 0
 
   useEffect(() => {
-    if (term.trim().length < 3) {
+    if (searchTerm.trim().length < 3) {
       setStatus('idle')
       setResults([])
       return
     }
-
     setStatus('loading')
-
     // Pagination not supported... yet
-    // searchPlants({
-    //   term: searchTerm,
-    //   limit: 10,
-    // }).then((data) => {
-    //   setResults(data)
-    //   setStatus('success')
-    // })
-    debouncedSearchPlants(term)
-  }, [term])
+    searchPlants({
+      term: searchTerm,
+      limit: 10,
+    }).then((data) => {
+      setResults(data)
+      setStatus('success')
+    })
+    // debouncedSearchPlants(term)
+  }, [searchTerm])
 
   return (
     <Layout>
