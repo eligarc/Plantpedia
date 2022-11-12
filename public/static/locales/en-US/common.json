@@ -6,5 +6,7 @@
   "gettingStarted": "Getting started",
   "about": "About",
   "aboutDescription": "Next.js Course",
-  "imagesFrom": "Images from"
+  "imagesFrom": "Images from",
+	"signIn": "Sign in",
+  "signOut": "Sign out"
 }
