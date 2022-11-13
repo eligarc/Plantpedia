@@ -5,15 +5,18 @@ import { UIProvider } from '@ui/Provider'
 import { Provider as AuthProvider } from 'next-auth/client'
 
 import '../ui/globals.css'
+import { QueryProvider } from '@api/QueryProvider'
 
 const NextApp = ({ Component, pageProps }: AppProps) => {
   useServerStyles()
   return (
-		<AuthProvider session={pageProps.session}>
-				<UIProvider>
-					<Component {...pageProps} />
-				</UIProvider>
-		</AuthProvider>
+    <AuthProvider session={pageProps.session}>
+      <QueryProvider>
+        <UIProvider>
+          <Component {...pageProps} />
+        </UIProvider>
+      </QueryProvider>
+    </AuthProvider>
   )
 }
 

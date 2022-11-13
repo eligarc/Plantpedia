@@ -1,3 +1,4 @@
+import React, { useState, PropsWithChildren } from 'react'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { Grid } from '@ui/Grid'
@@ -18,6 +19,7 @@ export function TopArea() {
 
 function LoginLogout() {
   const [session, loading] = useSession();
+  const [isHovering, setIsHovering] = useState(false)
   const { t } = useTranslation('common')
   
   if (loading) return null
@@ -25,10 +27,44 @@ function LoginLogout() {
   if (session === null) {
     return <Button onClick={() => signIn()}>{t('signIn')}</Button>
   }
-  return (<div>
-    <Typography>{session?.user?.name}</Typography>
-    <Button onClick={() => signOut()}>{t('signOut')}</Button>
-  </div>)
+  return (
+    <Avatar
+    image={session.user!.image!}
+    name={session.user!.name!}
+    onMouseEnter={() => setIsHovering(true)}
+    onMouseLeave={() => setIsHovering(false)}
+  >
+    {isHovering ? (
+      <Button onClick={() => signOut()}>{t('signOut')}</Button>
+    ) : (
+      <span className="inline-block p-2">{session.user?.name}</span>
+    )}
+  </Avatar>
+  )
+}
+
+function Avatar({
+  image,
+  name,
+  children,
+  ...containerProps
+}: PropsWithChildren<{ image: string; name: string }> &
+  React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLDivElement>,
+    HTMLDivElement
+  >) {
+  return (
+    <div {...containerProps} className="flex items-center">
+      <img
+        alt={name}
+        src={image}
+        width={32}
+        style={{ height: '32px' }}
+        className="mr-1 rounded-full"
+      />
+      {children}
+    </div>
+  )
 }
 
 export function LocaleOptions() {
