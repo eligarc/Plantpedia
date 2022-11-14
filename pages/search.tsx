@@ -49,7 +49,7 @@ export default function Search() {
   const emptyResults = status === 'success' && get(data, 'pages[0].length', 0) === 0
 
   let results: Plant[] = []
-  if (data?.pages != null) {
+  if (data && data?.pages !== null) {
     results = flatMap(data.pages)
   }
 

@@ -37,12 +37,10 @@ export function useInfinitePlantSearch(
     }),
     getNextPageParam: (lastPage) => {
       const lastPageData = lastPage.plantCollection
-      if (lastPageData == null) {
+      if (!lastPageData) {
         return undefined
       }
-
       const nextPage = lastPageData.skip + lastPageData.limit
-
       return nextPage >= lastPageData.total ? undefined : nextPage
     },
   })
