@@ -33,7 +33,6 @@ export const getStaticProps: GetStaticProps<PlantEntryPageProps> = async ({
       notFound: true,
     }
   }
-
   try {
     const plant = await getPlant(slug, preview, locale)
     const i18nConf = await serverSideTranslations(locale!)
