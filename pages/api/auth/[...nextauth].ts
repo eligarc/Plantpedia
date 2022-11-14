@@ -5,7 +5,10 @@ import Providers from "next-auth/providers";
 const options: NextAuthOptions = {
 	theme: "light",
 	debug: true,
-	session: {},
+	session: {
+		jwt: true,
+		maxAge: 60 * 15, // 15 minutes
+	},
 	jwt: {},
 	providers: [
 		Providers.Credentials({

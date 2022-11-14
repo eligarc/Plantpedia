@@ -9,12 +9,13 @@ import { Comment, CommentProps } from '@components/Wall/Comment'
 import { Editor } from '@components/Wall/Editor'
 
 import { getSession, useSession } from '@auth/client'
+import { AccessDenied } from '@components/AccessDenied'
 
 export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
   const session = await getSession(context)
   const i18n = await serverSideTranslations(context.locale!)
 
-  if (session == null) {
+  if (session === null) {
     return {
       redirect: {
         destination: '/api/auth/signin',
@@ -35,20 +36,20 @@ export default function WallPage() {
   const [stories, setStories] = useState<Story[]>([])
   const { t } = useTranslation(['page-wall'])
 
+  if (session === null) {
+    return <AccessDenied></AccessDenied>
+  }
   const addStory = (text: string) => {
     const message = text.trim()
-
     if (message.length < 1) {
       return
     }
-
     const newStory: Story = {
       id: new Date().getTime().toString(),
       name: session?.user?.name || '',
       imageUrl: session?.user?.image || '',
       text: message,
     }
-
     setStories((previousStories) => [newStory, ...previousStories])
   }
 
