@@ -40,7 +40,6 @@ export const getStaticProps: GetStaticProps<PlantEntryPageProps> = async ({
       limit: 5,
     })
     const categories = await getCategoryList({ limit: 10 })
-
     return {
       props: {
         plant,
