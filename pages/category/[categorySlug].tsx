@@ -64,7 +64,6 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
       'Locales are not defined. Did you forget to configure them?'
     )
   }
-
   const categoriesToGenerate = await getCategoryList({ limit: 10 })
 
   const paths: PathType[] = flatMap(
