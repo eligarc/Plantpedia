@@ -19,6 +19,7 @@ const fetchPlants: QueryFunction<ISearchPlantQuery, QueryKey> = ({
   pageParam = 0,
 }) => {
   const [_key, { term, limit }] = queryKey
+
   return sdk.searchPlant({ term, limit, skip: pageParam })
 }
 
@@ -42,7 +43,9 @@ export function useInfinitePlantSearch(
       if (lastPageData == null) {
         return undefined
       }
+
       const nextPage = lastPageData.skip + lastPageData.limit
+
       return nextPage >= lastPageData.total ? undefined : nextPage
     },
   })
