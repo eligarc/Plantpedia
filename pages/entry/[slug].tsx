@@ -27,7 +27,6 @@ export const getStaticProps: GetStaticProps<PlantEntryPageProps> = async ({
   locale,
 }) => {
   const slug = params?.slug
-
   if (typeof slug !== 'string') {
     return {
       notFound: true,
