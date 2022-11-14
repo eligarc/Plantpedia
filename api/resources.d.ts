@@ -52,7 +52,7 @@ type PaginatedList<T> = {
 }
 
 type User = {
-  name: string,
-  email: string,
-  image: string,
+  name: string
+  email: string
+  image: string
 }

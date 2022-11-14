@@ -1,7 +1,7 @@
 import {
   useInfiniteQuery,
   QueryFunction,
-  UseInfiniteQueryOptions,
+  // UseInfiniteQueryOptions,
 } from 'react-query'
 import {
   ISearchPlantQueryVariables,
@@ -19,16 +19,12 @@ const fetchPlants: QueryFunction<ISearchPlantQuery, QueryKey> = ({
   pageParam = 0,
 }) => {
   const [_key, { term, limit }] = queryKey
-
   return sdk.searchPlant({ term, limit, skip: pageParam })
 }
 
-type Options = Pick<UseInfiniteQueryOptions,'enabled' | 'staleTime' | 'refetchOnWindowFocus' | 'refetchOnMount'>
+// type Options = Pick<UseInfiniteQueryOptions,'enabled' | 'staleTime' | 'refetchOnWindowFocus' | 'refetchOnMount'>
 
-export function useInfinitePlantSearch(
-  args: InfinitePlantListArgs,
-  options?: Options
-) {
+export function useInfinitePlantSearch(args: any, options?: any): any {
   return useInfiniteQuery(['searchPlants', args], fetchPlants, {
     ...options,
     select: (data) => ({
