@@ -23,10 +23,7 @@ const fetchPlants: QueryFunction<ISearchPlantQuery, QueryKey> = ({
   return sdk.searchPlant({ term, limit, skip: pageParam })
 }
 
-type Options = Pick<
-  UseInfiniteQueryOptions,
-  'enabled' | 'staleTime' | 'refetchOnWindowFocus' | 'refetchOnMount'
->
+type Options = Pick<UseInfiniteQueryOptions,'enabled' | 'staleTime' | 'refetchOnWindowFocus' | 'refetchOnMount'>
 
 export function useInfinitePlantSearch(
   args: InfinitePlantListArgs,

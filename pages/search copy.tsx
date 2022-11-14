@@ -21,6 +21,9 @@ import { PlantCollection } from '@components/PlantCollection'
 
 import { useInfinitePlantSearch } from '@api/query/useInfinitePlantSearch'
 
+// import { searchPlants, QueryStatus } from '@api'
+// import debounce from 'lodash/debounce'
+
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: await serverSideTranslations(locale!),
 })
@@ -28,14 +31,24 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => ({
 export default function Search() {
   const { t } = useTranslation(['page-search'])
   const [term, setTerm] = useState('')
+  // const [status, setStatus] = useState<QueryStatus>('idle')
+  // const [results, setResults] = useState<Plant[]>([])
 
-  // Debounce the search value.
-  // Remember: With lodash you must use either useCallback or useRef
   const searchTerm = useDebounce(term, 500)
+  // const debouncedSearchPlants = useCallback(debounce((term: string) => {
+  //   searchPlants({
+  //     term,
+  //     limit: 10,
+  //   }).then((data) => {
+  //     setResults(data)
+  //     setStatus('success')
+  //   })
+  // }, 500),
+  // []
+  // )
 
-  // Use react-query to improve our http cache strategy and to make pagination easier
-  const { data, status, isFetchingNextPage, fetchNextPage, hasNextPage } =
-    useInfinitePlantSearch(
+    // Use react-query to improve our http cache strategy and to make pagination easier
+    const { data, status, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfinitePlantSearch(
       { term: searchTerm },
       {
         enabled: searchTerm.trim().length > 1,
@@ -46,12 +59,29 @@ export default function Search() {
   const updateTerm: ChangeEventHandler<HTMLInputElement> = (event) =>
     setTerm(event.currentTarget.value)
 
-  const emptyResults = status === 'success' && get(data, 'pages[0].length', 0) === 0
-
-  let results: Plant[] = []
-  if (data?.pages != null) {
+  // const emptyResults = status === 'success' && results.length === 0
+   const emptyResults = status === 'success' && get(data, 'pages[0].length', 0) === 0
+   let results: Plant[] = []
+   if (data?.pages != null) {
     results = flatMap(data.pages)
   }
+  // useEffect(() => {
+  //   if (searchTerm.trim().length < 3) {
+  //     setStatus('idle')
+  //     setResults([])
+  //     return
+  //   }
+  //   setStatus('loading')
+  //   // Pagination not supported... yet
+  //   searchPlants({
+  //     term: searchTerm,
+  //     limit: 10,
+  //   }).then((data) => {
+  //     setResults(data)
+  //     setStatus('success')
+  //   })
+  //   // debouncedSearchPlants(term)
+  // }, [searchTerm])
 
   return (
     <Layout>
@@ -68,7 +98,7 @@ export default function Search() {
                   <SearchIcon />
                 </InputAdornment>
               }
-              labelWidth={100}
+              label={t('term')}
             />
           </FormControl>
         </div>
@@ -99,16 +129,10 @@ export default function Search() {
   )
 }
 
-function useDebounce<T>(value: T, wait = 0) {
+function useDebounce<T>(value: T, delay: number = 0) {
   const [debouncedValue, setDebouncedValue] = useState(value)
-
   useEffect(() => {
-    // Update the inner state after <wait> ms
-    const timeoutId = window.setTimeout(() => {
-      setDebouncedValue(value)
-    }, wait)
-
-    // Clear timeout in case a new value is received
+    const timeoutId = window.setTimeout(() => setDebouncedValue(value), delay)
     return () => {
       window.clearTimeout(timeoutId)
     }
