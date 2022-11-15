@@ -65,7 +65,6 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
     )
   }
   const categoriesToGenerate = await getCategoryList({ limit: 10 })
-
   const paths: PathType[] = flatMap(
     categoriesToGenerate.map(({ slug: categorySlug }) => ({
       params: {
@@ -74,7 +73,6 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
     })),
     (path) => locales.map((loc) => ({ ...path, locale: loc }))
   )
-
   return {
     paths,
 
