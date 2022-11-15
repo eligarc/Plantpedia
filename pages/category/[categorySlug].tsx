@@ -26,7 +26,6 @@ export const getStaticProps: GetStaticProps<CategoryPageProps> = async ({
       notFound: true,
     }
   }
-
   try {
     const { entries, category } = await getPlantListByCategory({
       category: slug,
