@@ -75,7 +75,6 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
   )
   return {
     paths,
-
     // Block until the server gets its data. Like in Server side rendering
     fallback: 'blocking',
   }
