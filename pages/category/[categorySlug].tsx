@@ -20,7 +20,6 @@ export const getStaticProps: GetStaticProps<CategoryPageProps> = async ({
   locale,
 }) => {
   const slug = params?.categorySlug
-
   if (typeof slug !== 'string') {
     return {
       notFound: true,
